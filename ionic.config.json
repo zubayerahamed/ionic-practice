@@ -1,0 +1,7 @@
+{
+  "name": "aspi",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
