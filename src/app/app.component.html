@@ -1,3 +1,50 @@
 <ion-app>
-  <ion-router-outlet></ion-router-outlet>
+  <ion-menu contentId="main-content">
+    <ion-content class="ion-no-padding">
+      <div class="menu-header">
+        <div class="header-overlay"></div>
+        <div class="header-info">
+          <ion-avatar class="user-avatar">
+            <img src="https://ionicframework.com/docs/img/demos/avatar.svg" alt="User Avatar" />
+          </ion-avatar>
+          <div class="user-details">
+            <h2>Welcome Back</h2>
+            <p>user@example.com</p>
+          </div>
+        </div>
+      </div>
+
+      <ion-list class="menu-list" lines="none">
+        <ion-list-header>
+          <ion-label>Navigation</ion-label>
+        </ion-list-header>
+
+        @for (p of pages; track p.title) {
+          <ion-menu-toggle auto-hide="false">
+            <ion-item [routerLink]="p.url" routerDirection="root" routerLinkActive="active-item" [routerLinkActiveOptions]="{ exact: true }">
+              <ion-icon slot="start" [name]="p.icon"></ion-icon>
+              <ion-label>{{ p.title }}</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+        }
+
+        <ion-list-header class="theme-header">
+          <ion-label>Preferences</ion-label>
+        </ion-list-header>
+        
+        <ion-item class="theme-toggle-item" [class.dark-active]="darkMode">
+          <ion-icon slot="start" [name]="darkMode ? 'moon' : 'sunny-outline'"></ion-icon>
+          <ion-label>Dark Mode</ion-label>
+          <ion-toggle slot="end" [checked]="darkMode" (ionChange)="toggleTheme($event)"></ion-toggle>
+        </ion-item>
+      </ion-list>
+      
+      <div class="menu-footer">
+        <ion-note>Version 1.0.0</ion-note>
+      </div>
+    </ion-content>
+  </ion-menu>
+
+  <ion-router-outlet id="main-content"></ion-router-outlet>
 </ion-app>
+

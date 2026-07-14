@@ -3,6 +3,10 @@ import { Routes } from '@angular/router';
 export const routes: Routes = [
   {
     path: '',
-    loadChildren: () => import('./tabs/tabs.routes').then((m) => m.routes),
+    loadChildren: () => import('./pages/tabs/tabs.routes').then((m) => m.routes),
+  },
+  {
+    path: 'camera',
+    loadComponent: () => import('./pages/camera/camera.page').then( m => m.CameraPage)
   },
 ];

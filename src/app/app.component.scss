@@ -1,0 +1,201 @@
+// Side menu container
+ion-menu {
+  --width: 280px;
+  --max-width: 80%;
+  
+  ion-content {
+    --background: var(--ion-background-color, #ffffff);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+}
+
+// Menu Header
+.menu-header {
+  position: relative;
+  padding: 32px 24px;
+  background: linear-gradient(135deg, var(--ion-color-primary, #3880ff) 0%, var(--ion-color-secondary, #7044ff) 100%);
+  color: #ffffff;
+  overflow: hidden;
+  border-bottom-right-radius: 24px;
+
+  .header-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.15), transparent);
+    pointer-events: none;
+  }
+
+  .header-info {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .user-avatar {
+    width: 56px;
+    height: 56px;
+    border: 2px solid rgba(255, 255, 255, 0.8);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    border-radius: 50%;
+    transition: transform 0.3s ease;
+
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+
+  .user-details {
+    h2 {
+      margin: 0;
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+      color: #ffffff;
+    }
+
+    p {
+      margin: 4px 0 0 0;
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.8);
+      font-weight: 400;
+    }
+  }
+}
+
+// Navigation list
+.menu-list {
+  background: transparent;
+  padding: 20px 12px;
+
+  ion-list-header {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--ion-color-step-450, #8c8c8c);
+    margin-bottom: 12px;
+    padding-inline-start: 16px;
+  }
+
+  ion-item {
+    --background: transparent;
+    --border-radius: 12px;
+    --padding-start: 16px;
+    --padding-end: 16px;
+    --min-height: 48px;
+    margin-bottom: 6px;
+    font-weight: 500;
+    color: var(--ion-color-step-700, #4d4d4d);
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+
+    ion-icon {
+      color: var(--ion-color-step-500, #808080);
+      font-size: 1.3rem;
+      transition: color 0.2s ease-in-out, transform 0.2s ease-in-out;
+    }
+
+    ion-label {
+      font-size: 0.95rem;
+      letter-spacing: -0.2px;
+    }
+
+    // Hover effect
+    &:hover:not(.active-item) {
+      --background: var(--ion-color-step-50, rgba(0, 0, 0, 0.04));
+      color: var(--ion-color-primary, #3880ff);
+
+      ion-icon {
+        color: var(--ion-color-primary, #3880ff);
+        transform: translateX(2px);
+      }
+    }
+
+    // Active state styling
+    &.active-item {
+      --background: var(--ion-color-primary-light, rgba(56, 128, 255, 0.08));
+      color: var(--ion-color-primary, #3880ff);
+      font-weight: 600;
+
+      ion-icon {
+        color: var(--ion-color-primary, #3880ff);
+      }
+    }
+  }
+
+  .theme-header {
+    margin-top: 24px;
+  }
+
+  .theme-toggle-item {
+    --background: transparent;
+    --border-radius: 12px;
+    --padding-start: 16px;
+    --padding-end: 16px;
+    --min-height: 48px;
+    margin-bottom: 6px;
+    font-weight: 500;
+    color: var(--ion-color-step-700, #4d4d4d);
+    cursor: default;
+
+    ion-icon {
+      color: #f5b041; // Gold/yellow for sun
+      font-size: 1.3rem;
+      transition: color 0.3s ease, transform 0.3s ease;
+    }
+
+    &.dark-active ion-icon {
+      color: #a569bd; // Purple/indigo for moon
+      transform: rotate(-25deg);
+    }
+
+    ion-toggle {
+      --handle-background: #ffffff;
+      --handle-background-checked: #ffffff;
+      --track-background: var(--ion-color-step-200, #cccccc);
+      --track-background-checked: var(--ion-color-primary, #3880ff);
+    }
+  }
+}
+
+// Menu Footer
+.menu-footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 16px 24px;
+  background: var(--ion-background-color, #ffffff);
+  border-top: 1px solid var(--ion-color-step-150, #e6e6e6);
+  text-align: center;
+
+  ion-note {
+    font-size: 0.75rem;
+    color: var(--ion-color-step-400, #999999);
+  }
+}
+
+// Adjust styles for Dark Palette compatibility
+@media (prefers-color-scheme: dark) {
+  .menu-list ion-item {
+    &.active-item {
+      --background: rgba(56, 128, 255, 0.15);
+    }
+    
+    &:hover:not(.active-item) {
+      --background: rgba(255, 255, 255, 0.05);
+    }
+  }
+
+  .menu-footer {
+    border-top-color: var(--ion-color-step-850, #262626);
+    background: var(--ion-background-color, #121212);
+  }
+}
