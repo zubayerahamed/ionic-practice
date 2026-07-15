@@ -1,8 +1,10 @@
-import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IonButton, IonButtons, IonCol, IonContent, IonGrid, IonHeader, IonImg, IonMenuButton, IonRow, IonTitle, IonToolbar } from '@ionic/angular/standalone';
-import { PhotoService } from 'src/app/services/photo.service';
+import { ActionSheetController, IonButtons, IonCol, IonContent, IonFab, IonFabButton, IonGrid, IonHeader, IonIcon, IonImg, IonMenuButton, IonRow, IonTitle, IonToolbar } from '@ionic/angular/standalone';
+import { addIcons } from 'ionicons';
+import { camera, trash, close } from 'ionicons/icons';
+import { PhotoService, UserPhoto } from 'src/app/core/services/photo.service';
 
 @Component({
   selector: 'app-camera',
@@ -18,24 +20,55 @@ import { PhotoService } from 'src/app/services/photo.service';
     FormsModule,
     IonButtons,
     IonMenuButton,
-    IonButton,
     IonGrid,
     IonRow,
     IonCol,
-    IonImg
+    IonImg,
+    IonFab,
+    IonFabButton,
+    IonIcon,
   ]
 })
 export class CameraPage implements OnInit {
 
   photoService: PhotoService = inject(PhotoService);
+  actionSheetController: ActionSheetController = inject(ActionSheetController);
 
-  constructor() { }
+  constructor() {
+    addIcons({ camera, trash, close });
+  }
 
-  ngOnInit() {
+  async ngOnInit() {
+    await this.photoService.loadSaved();
   }
 
 
   takePhoto() {
     this.photoService.addNewToGallery();
+  }
+
+  public async showActionSheet(photo: UserPhoto, position: number) {
+    const actionSheet = await this.actionSheetController.create({
+      header: 'Photos',
+      buttons: [
+        {
+          text: 'Delete',
+          role: 'destructive',
+          icon: 'trash',
+          handler: () => {
+            this.photoService.deletePhoto(photo, position);
+          },
+        },
+        {
+          text: 'Cancel',
+          icon: 'close',
+          role: 'cancel',
+          handler: () => {
+            // Nothing to do, action sheet is automatically closed
+          },
+        },
+      ],
+    });
+    await actionSheet.present();
   }
 }

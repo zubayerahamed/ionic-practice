@@ -14,20 +14,19 @@
     </ion-toolbar>
   </ion-header>
 
-
-
-  <ion-buttons>
-    <ion-button fill="solid" expand="block" color="tertiary" (click)="takePhoto()">
-      Take Photo</ion-button>
-  </ion-buttons>
-
   <ion-grid>
     <ion-row>
       <!-- CHANGE: Create a new column and image component for each photo -->
       <ion-col size="6" *ngFor="let photo of photoService.photos; index as position">
-        <ion-img [src]="photo.webviewPath"></ion-img>
+        <ion-img [src]="photo.webviewPath" (click)="showActionSheet(photo, position)"></ion-img>
       </ion-col>
     </ion-row>
   </ion-grid>
+
+  <ion-fab vertical="bottom" horizontal="center" slot="fixed">
+    <ion-fab-button (click)="takePhoto()" type="button" aria-label="Take photo">
+      <ion-icon name="camera"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 
 </ion-content>
