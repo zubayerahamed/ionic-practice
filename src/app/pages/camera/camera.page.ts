@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ActionSheetController, IonButtons, IonCol, IonContent, IonFab, IonFabButton, IonGrid, IonHeader, IonIcon, IonImg, IonMenuButton, IonRow, IonTitle, IonToolbar } from '@ionic/angular/standalone';
+import { ActionSheetController, IonBackButton, IonButtons, IonCol, IonContent, IonFab, IonFabButton, IonGrid, IonHeader, IonIcon, IonImg, IonRow, IonTitle, IonToolbar } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { camera, trash, close } from 'ionicons/icons';
+import { camera, close, trash } from 'ionicons/icons';
 import { PhotoService, UserPhoto } from 'src/app/core/services/photo.service';
 
 @Component({
@@ -19,7 +19,6 @@ import { PhotoService, UserPhoto } from 'src/app/core/services/photo.service';
     CommonModule,
     FormsModule,
     IonButtons,
-    IonMenuButton,
     IonGrid,
     IonRow,
     IonCol,
@@ -27,6 +26,7 @@ import { PhotoService, UserPhoto } from 'src/app/core/services/photo.service';
     IonFab,
     IonFabButton,
     IonIcon,
+    IonBackButton
   ]
 })
 export class CameraPage implements OnInit {

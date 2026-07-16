@@ -21,7 +21,7 @@ import {
   IonSpinner,
   IonTitle,
   IonToolbar,
-  ToastController,
+  ToastController, IonBackButton
 } from '@ionic/angular/standalone';
 import { FoodItem } from 'src/app/core/models/food-item.model';
 import { FoodItemService } from 'src/app/core/services/food-item.service';
@@ -32,7 +32,7 @@ import { FoodItemService } from 'src/app/core/services/food-item.service';
   standalone: true,
   templateUrl: './food-items.page.html',
   styleUrls: ['./food-items.page.scss'],
-  imports: [
+  imports: [IonBackButton,
     CommonModule,
     FormsModule,
 

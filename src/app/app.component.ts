@@ -16,8 +16,9 @@ import {
   IonToggle
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { homeOutline, compassOutline, cogOutline, moon, sunnyOutline, cameraOutline } from 'ionicons/icons';
+import { homeOutline, compassOutline, cogOutline, moon, sunnyOutline, cameraOutline, fastFoodOutline } from 'ionicons/icons';
 import { DatabaseService } from './core/database/database.service';
+
 
 @Component({
   selector: 'app-root',
@@ -47,17 +48,23 @@ export class AppComponent implements OnInit {
   private readonly databaseService = inject(DatabaseService);
 
   public pages = [
+    { title: 'Home', url: '/tabs/tab1', icon: 'home-outline' },
     { title: 'Camera', url: '/camera', icon: 'camera-outline' },
-    { title: 'Food Items', url: '/food-items', icon: 'camera-outline' },
-    { title: 'Dashboard', url: '/tabs/tab1', icon: 'home-outline' },
-    { title: 'Explore', url: '/tabs/tab2', icon: 'compass-outline' },
-    { title: 'Settings', url: '/tabs/tab3', icon: 'cog-outline' },
+    { title: 'DB-CRUD', url: '/food-items', icon: 'fast-food-outline' },
   ];
 
   public darkMode = false;
 
   constructor() {
-    addIcons({ homeOutline, compassOutline, cogOutline, moon, sunnyOutline, cameraOutline });
+    addIcons({
+      homeOutline,
+      compassOutline,
+      cogOutline,
+      moon,
+      sunnyOutline,
+      cameraOutline,
+      fastFoodOutline
+    });
   }
 
   ngOnInit() {
