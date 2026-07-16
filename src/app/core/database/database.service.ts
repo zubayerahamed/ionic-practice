@@ -11,15 +11,13 @@ import {
   providedIn: 'root',
 })
 export class DatabaseService {
+  private readonly sqlite = new SQLiteConnection(CapacitorSQLite);
+  private database?: SQLiteDBConnection;
+
   private readonly databaseName = 'food_database';
   private readonly databaseVersion = 1;
   private readonly isWeb = Capacitor.getPlatform() === 'web';
 
-  private readonly sqliteConnection = new SQLiteConnection(
-    CapacitorSQLite,
-  );
-
-  private database?: SQLiteDBConnection;
   private initializationPromise?: Promise<void>;
 
   initializeDatabase(): Promise<void> {
@@ -37,24 +35,6 @@ export class DatabaseService {
     }
 
     return this.initializationPromise;
-  }
-
-  async getDatabase(): Promise<SQLiteDBConnection> {
-    await this.initializeDatabase();
-
-    if (!this.database) {
-      throw new Error('Database connection is not available.');
-    }
-
-    return this.database;
-  }
-
-  async saveWebDatabase(): Promise<void> {
-    if (!this.isWeb) {
-      return;
-    }
-
-    await this.sqliteConnection.saveToStore(this.databaseName);
   }
 
   private async performInitialization(): Promise<void> {
@@ -80,10 +60,7 @@ export class DatabaseService {
      * Because initializeDatabase() is called from ngAfterViewInit(),
      * this element should now exist.
      */
-    // const jeepSqliteElement =
-    //   document.querySelector<HTMLJeepSqliteElement>('jeep-sqlite');
-    const jeepSqliteElement =
-      document.querySelector('jeep-sqlite');
+    const jeepSqliteElement = document.querySelector('jeep-sqlite');
 
     if (!jeepSqliteElement) {
       throw new Error(
@@ -92,37 +69,17 @@ export class DatabaseService {
       );
     }
 
-    await this.sqliteConnection.initWebStore();
+    await this.sqlite.initWebStore();
   }
 
   private async openConnection(): Promise<void> {
-    const consistencyResult =
-      await this.sqliteConnection.checkConnectionsConsistency();
+    const consistencyResult = await this.sqlite.checkConnectionsConsistency();
+    const connectionResult = await this.sqlite.isConnection(this.databaseName, false);
 
-    const connectionResult =
-      await this.sqliteConnection.isConnection(
-        this.databaseName,
-        false,
-      );
-
-    if (
-      consistencyResult.result &&
-      connectionResult.result
-    ) {
-      this.database =
-        await this.sqliteConnection.retrieveConnection(
-          this.databaseName,
-          false,
-        );
+    if (consistencyResult.result && connectionResult.result) {
+      this.database = await this.sqlite.retrieveConnection(this.databaseName, false);
     } else {
-      this.database =
-        await this.sqliteConnection.createConnection(
-          this.databaseName,
-          false,
-          'no-encryption',
-          this.databaseVersion,
-          false,
-        );
+      this.database = await this.sqlite.createConnection(this.databaseName, false, 'no-encryption', this.databaseVersion, false);
     }
 
     const isOpenResult = await this.database.isDBOpen();
@@ -151,4 +108,29 @@ export class DatabaseService {
 
     await this.database.execute(schema);
   }
+
+  async saveWebDatabase(): Promise<void> {
+    if (!this.isWeb) {
+      return;
+    }
+
+    await this.sqlite.saveToStore(this.databaseName);
+  }
+
+  async getDatabase(): Promise<SQLiteDBConnection> {
+    await this.initializeDatabase();
+
+    if (!this.database) {
+      throw new Error('Database connection is not available.');
+    }
+
+    return this.database;
+  }
+
+
 }
+
+
+
+
+

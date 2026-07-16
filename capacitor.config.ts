@@ -2,7 +2,7 @@ import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
   appId: 'com.zayaanit.ip',
-  appName: 'ip',
+  appName: 'IP',
   webDir: 'www',
   server: {
     androidScheme: 'https',

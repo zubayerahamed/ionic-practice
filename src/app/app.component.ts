@@ -46,8 +46,6 @@ export class AppComponent implements OnInit {
 
   private readonly databaseService = inject(DatabaseService);
 
-
-
   public pages = [
     { title: 'Camera', url: '/camera', icon: 'camera-outline' },
     { title: 'Food Items', url: '/food-items', icon: 'camera-outline' },
@@ -69,14 +67,11 @@ export class AppComponent implements OnInit {
   async ngAfterViewInit(): Promise<void> {
     try {
       await this.databaseService.initializeDatabase();
-
       console.log('Database initialized successfully.');
     } catch (error: unknown) {
       console.error('Database initialization failed:', error);
     }
   }
-
-
 
   private initializeTheme() {
     const savedTheme = localStorage.getItem('darkMode');

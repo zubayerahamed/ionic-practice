@@ -50,6 +50,8 @@ export class FoodItemService {
       throw new Error('Created food item could not be loaded.');
     }
 
+    console.log(createdItem);
+
     return createdItem;
   }
 

@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import {
+  ChangeDetectorRef,
   Component,
   OnInit,
   inject,
@@ -53,6 +54,7 @@ export class FoodItemsPage implements OnInit {
   private readonly foodItemService = inject(FoodItemService);
   private readonly alertController = inject(AlertController);
   private readonly toastController = inject(ToastController);
+  private cdr = inject(ChangeDetectorRef);
 
   foodItems: FoodItem[] = [];
 
@@ -151,6 +153,8 @@ export class FoodItemsPage implements OnInit {
       if (this.editingId === id) {
         this.resetForm();
       }
+
+      this.cdr.detectChanges();
     } catch (error: unknown) {
       await this.showError(error);
     }
